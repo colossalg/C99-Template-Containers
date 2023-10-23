@@ -1,14 +1,17 @@
 CC = gcc
 CFLAGS = --std=c99 -Wall -Werror -pedantic -g
 
+INC_DIR = ./include
+BIN_DIR = ./bin
+
 build: ./include/* ./test/*
 	mkdir -p ./bin
-	$(CC) $(CFLAGS) ./test/*.c -o ./bin/tests
+	$(CC) $(CFLAGS) -I $(INC_DIR) ./test/*.c -o $(BIN_DIR)/tests
 
 .PHONY: test clean
 
 test:
-	./bin/tests
+	$(BIN_DIR)/tests
 
 clean:
-	rm -rf ./bin
+	rm -rf $(BIN_DIR)

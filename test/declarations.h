@@ -1,7 +1,7 @@
 #ifndef COLOSSALG_TESTING_DECLARATIONS_H
 #define COLOSSALG_TESTING_DECLARATIONS_H
 
-#include "../include/linked_list.h"
+#include <templates/containers/linked_list.h>
 
 #include "person.h"
 
