@@ -3,7 +3,7 @@
 
 #include <templates/containers/linked_list.h>
 
-#include "person.h"
+#include "../dummy/person.h"
 
 DECLARE_LINKED_LIST_T(person)
 DECLARE_LINKED_LIST_T(person_ptr)

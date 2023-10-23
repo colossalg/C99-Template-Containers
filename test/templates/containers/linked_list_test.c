@@ -2,38 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "declarations.h"
-
-#include "person.h"
-
-const size_t people_len = 5;
-person people[] = {
-    {
-        .fname = "Helen",
-        .lname = "Wylie"
-    },
-    {
-        .fname = "Angus",
-        .lname = "Wylie"
-    },
-    {
-        .fname = "Reuben",
-        .lname = "Wylie"
-    },
-    {
-        .fname = "Tracey",
-        .lname = "Jones"
-    },
-    {
-        .fname = "Samuel",
-        .lname = "Wylie"
-    }
-};
-
-person john_doe = {
-    .fname = "John",
-    .lname = "Doe"
-};
+#include "../declarations.h"
 
 list_of_person* create_populated_list_of_person()
 {

@@ -4,14 +4,21 @@ CFLAGS = --std=c99 -Wall -Werror -pedantic -g
 INC_DIR = ./include
 BIN_DIR = ./bin
 
-build: ./include/* ./test/*
-	mkdir -p ./bin
-	$(CC) $(CFLAGS) -I $(INC_DIR) ./test/*.c -o $(BIN_DIR)/tests
+LIB_HEADER_FILES = $(shell find ./include -type f -name "*.h")
+
+TEST_HEADER_FILES = $(shell find ./test -type f -name "*.h")
+TEST_SOURCE_FILES = $(shell find ./test -type f -name "*.c")
+
+TEST_TARGET = $(BIN_DIR)/tests
+
+build: $(LIB_HEADER_FILES) $(TEST_HEADER_FILES) $(TEST_SOURCE_FILES)
+	mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) $(TEST_SOURCE_FILES) -o $(TEST_TARGET)
 
 .PHONY: test clean
 
 test:
-	$(BIN_DIR)/tests
+	$(TEST_TARGET)
 
 clean:
 	rm -rf $(BIN_DIR)
