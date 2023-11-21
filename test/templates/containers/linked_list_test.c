@@ -5,7 +5,6 @@
 #include "../../dummy/person.h"
 
 #include "./generated/linked_list_of_person.h"
-#include "./generated/linked_list_of_person_ptr.h"
 
 list_of_person* create_populated_list_of_person()
 {
@@ -26,7 +25,7 @@ list_of_person* create_populated_list_of_person()
     return list;
 }
 
-void test_list_of_xxx_insert_at_head_val_type()
+void test_list_of_xxx_insert_at_head()
 {
     list_of_person* list = list_of_person_create();
     if (NULL == list) {
@@ -56,37 +55,7 @@ void test_list_of_xxx_insert_at_head_val_type()
     list->destroy(list);
 }
 
-void test_list_of_xxx_insert_at_head_ptr_type()
-{
-    list_of_person_ptr* list = list_of_person_ptr_create();
-    if (NULL == list) {
-        fprintf(stderr, "list_of_person_create() failed.");
-        exit(EXIT_FAILURE);
-    }
-
-    for (size_t i = 0; i < people_len; ++i) {
-        bool res = list->insert_at_head(list, &people[i]);
-        if (!res) {
-            fprintf(stderr, "insert_at_head() failed.");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    assert(people_len == list->size);
-    assert(NULL != list->head);
-    assert(NULL != list->tail);
-
-    list_of_person_ptr_item* item = list->tail;
-    for (size_t i = 0; i < people_len; ++i) {
-        //person_print(item->data);
-        assert(person_equals(&people[i], item->data));
-        item = item->prev;
-    }
-
-    list->destroy(list);
-}
-
-void test_list_of_xxx_insert_at_tail_val_type()
+void test_list_of_xxx_insert_at_tail()
 {
     list_of_person* list = list_of_person_create();
     if (NULL == list) {
@@ -110,36 +79,6 @@ void test_list_of_xxx_insert_at_tail_val_type()
     for (size_t i = 0; i < people_len; ++i) {
         //person_print(&item->data);
         assert(person_equals(&people[i], &item->data));
-        item = item->next;
-    }
-
-    list->destroy(list);
-}
-
-void test_list_of_xxx_insert_at_tail_ptr_type()
-{
-    list_of_person_ptr* list = list_of_person_ptr_create();
-    if (NULL == list) {
-        fprintf(stderr, "list_of_person_create() failed.");
-        exit(EXIT_FAILURE);
-    }
-
-    for (size_t i = 0; i < people_len; ++i) {
-        bool res = list->insert_at_tail(list, &people[i]);
-        if (!res) {
-            fprintf(stderr, "insert_at_tail() failed.");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    assert(people_len == list->size);
-    assert(NULL != list->head);
-    assert(NULL != list->tail);
-
-    list_of_person_ptr_item* item = list->head;
-    for (size_t i = 0; i < people_len; ++i) {
-        //person_print(item->data);
-        assert(person_equals(&people[i], item->data));
         item = item->next;
     }
 
@@ -298,7 +237,7 @@ void test_list_of_xxx_remove()
     assert(old_prev == item->next->prev);
 }
 
-void dummy_destroy_person(person p)
+static void dummy_destroy_person(person p)
 {
     static size_t index = 0;
 
