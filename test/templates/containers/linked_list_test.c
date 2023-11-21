@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../declarations.h"
+#include "../../dummy/person.h"
+
+#include "./generated/linked_list_of_person.h"
+#include "./generated/linked_list_of_person_ptr.h"
 
 list_of_person* create_populated_list_of_person()
 {
