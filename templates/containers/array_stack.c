@@ -17,8 +17,8 @@ array_stack_optional_<typename> array_stack_of_<typename>_pop(array_stack_of_<ty
     result.has_value = true;
     result.value     = stack->elements[stack->head];
 
-    stack->head--;
     stack->size--;
+    stack->head--;
 
     return result;
 }

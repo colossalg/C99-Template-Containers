@@ -1,10 +1,16 @@
 #include "framework.h"
 
+#include "templates/containers/array_queue_test.h"
 #include "templates/containers/array_stack_test.h"
 #include "templates/containers/linked_list_test.h"
 
 int main(int argc, char** argv)
 {
+    RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_enqueue_and_dequeue);
+    RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_overflow);
+    RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_underflow);
+    RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_destroy);
+
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_push_and_pop);
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_overflow);
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_underflow);

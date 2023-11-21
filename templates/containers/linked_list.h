@@ -1,5 +1,5 @@
-#ifndef COLOSSALG_LINKED_LIST_OF_<typename>
-#define COLOSSALG_LINKED_LIST_OF_<typename>
+#ifndef COLOSSALG_LINKED_LIST_OF_<typename>_H
+#define COLOSSALG_LINKED_LIST_OF_<typename>_H
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -40,4 +40,4 @@ struct list_of_<typename>_item {
 
 list_of_<typename>* list_of_<typename>_create();
 
-#endif // COLOSSALG_LINKED_LIST_OF_<typename>
+#endif // COLOSSALG_LINKED_LIST_OF_<typename>_H
