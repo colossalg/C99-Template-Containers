@@ -1,5 +1,5 @@
-#ifndef COLOSSALG_ARRAY_STACK_OF_<typename>
-#define COLOSSALG_ARRAY_STACK_OF_<typename>
+#ifndef COLOSSALG_ARRAY_STACK_OF_<typename>_H
+#define COLOSSALG_ARRAY_STACK_OF_<typename>_H
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -34,4 +34,4 @@ struct array_stack_optional_<typename> {
 
 array_stack_of_<typename>* array_stack_of_<typename>_create(size_t max_size);
 
-#endif // COLOSSALG_ARRAY_STACK_OF_<typename>
+#endif // COLOSSALG_ARRAY_STACK_OF_<typename>_H

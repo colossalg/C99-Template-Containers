@@ -26,5 +26,19 @@
         "dst_file": "./test/templates/containers/generated/array_stack_of_person.c",
         "type_name": "person",
         "template_header": "array_stack_of_person.h"
+    },
+    {
+        "src_file": "./templates/containers/array_queue.h",
+        "dst_file": "./test/templates/containers/generated/array_queue_of_person.h",
+        "type_name": "person",
+        "additional_rel_headers": [
+            "../../../dummy/person.h"
+        ]
+    },
+    {
+        "src_file": "./templates/containers/array_queue.c",
+        "dst_file": "./test/templates/containers/generated/array_queue_of_person.c",
+        "type_name": "person",
+        "template_header": "array_queue_of_person.h"
     }
 ]
