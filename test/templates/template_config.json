@@ -14,17 +14,17 @@
         "template_header": "linked_list_of_person.h"
     },
     {
-        "src_file": "./templates/containers/linked_list.h",
-        "dst_file": "./test/templates/containers/generated/linked_list_of_person_ptr.h",
-        "type_name": "person_ptr",
+        "src_file": "./templates/containers/array_stack.h",
+        "dst_file": "./test/templates/containers/generated/array_stack_of_person.h",
+        "type_name": "person",
         "additional_rel_headers": [
             "../../../dummy/person.h"
         ]
     },
     {
-        "src_file": "./templates/containers/linked_list.c",
-        "dst_file": "./test/templates/containers/generated/linked_list_of_person_ptr.c",
-        "type_name": "person_ptr",
-        "template_header": "linked_list_of_person_ptr.h"
+        "src_file": "./templates/containers/array_stack.c",
+        "dst_file": "./test/templates/containers/generated/array_stack_of_person.c",
+        "type_name": "person",
+        "template_header": "array_stack_of_person.h"
     }
 ]

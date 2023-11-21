@@ -1,18 +1,20 @@
 CC = gcc
 CFLAGS = --std=c99 -Wall -Werror -pedantic -g
 
-INC_DIR = ./include
 GEN_DIR = ./test/templates/containers/generated
 BIN_DIR = ./bin
+
+TEMPLATE_HEADER_FILES = $(shell find ./templates -type f -name "*.h")
+TEMPLATE_SOURCE_FILES = $(shell find ./templates -type f -name "*.c")
 
 TEST_HEADER_FILES = $(shell find ./test -type f -name "*.h")
 TEST_SOURCE_FILES = $(shell find ./test -type f -name "*.c")
 
 TEST_TARGET = $(BIN_DIR)/tests
 
-build: $(LIB_HEADER_FILES) $(TEST_HEADER_FILES) $(TEST_SOURCE_FILES)
+build: $(TEMPLATE_HEADER_FILES) $(TEMPLATE_SOURCE_FILES) $(TEST_HEADER_FILES) $(TEST_SOURCE_FILES)
 	mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) -I $(INC_DIR) $(TEST_SOURCE_FILES) -o $(TEST_TARGET)
+	$(CC) $(CFLAGS) $(TEST_SOURCE_FILES) -o $(TEST_TARGET)
 
 .PHONY: generate test clean
 
