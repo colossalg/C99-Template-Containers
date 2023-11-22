@@ -11,6 +11,7 @@
         "../../../dummy/vehicle.h"
     ],
     "optional": [],
+    "pair": [],
     "array_queue": ["person", "vehicle"],
     "array_stack": ["person", "vehicle"],
     "linked_list": ["person", "vehicle"],

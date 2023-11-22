@@ -4,16 +4,19 @@ typedef struct dict_of_<key_type>_and_<val_type> dict_of_<key_type>_and_<val_typ
 
 struct dict_of_<key_type>_and_<val_type> {
     size_t num_slots;
-    list_of_<val_type>** slot_lists;
+    list_of_pair_of_<key_type>_and_<val_type>** slots;
+
+    bool    (*insert)   (<key_type> key, <val_type> val);
+    bool    (*remove)   (<key_type> key);
 
     size_t  (*hash_func)    (const <key_type> key);
-    bool    (*comparator)   (const <val_type> val_1, const <val_type> val_2);
+    bool    (*comparator)   (const <key_type> key_1, const <key_type> key_2);
     void    (*destroy_data) (<val_type> val);
 };
 
 dict_of_<key_type>_and_<val_type>* dict_of_<key_type>_and_<val_type>_create(
     size_t num_slots,
     size_t  (*hash_func)    (const <key_type> key),
-    bool    (*comparator)   (const <val_type> val_1, const <val_type> val_2),
+    bool    (*comparator)   (const <key_type> key_1, const <key_type> key_2),
     void    (*destroy_data) (<val_type> val)
 );

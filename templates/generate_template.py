@@ -34,6 +34,8 @@ class TemplateClass:
         return contentStream.getvalue()
 
     def getProcessedSourceContents(self, src_dir):
+        if self.source_template_file is None:
+            return ''
         with open(os.path.join(src_dir, self.source_template_file), 'r') as f:
             return self.getProcessedFileContents(f)
 
@@ -45,9 +47,20 @@ class Optional(TemplateClass):
     def __init__(self, typename):
         super().__init__(
             { 'typename': typename },
-            'optional.template.c',
+            None,
             'optional.template.h'
         )
+
+class Pair(TemplateClass):
+    def __init__(self, typeinfo):
+        super().__init__(
+            typeinfo,
+            None,
+            'pair.template.h'
+        )
+
+    def getTemplateTypeName(self):
+        return f'pair_of_{self.typeinfo["typename_1"]}_and_{self.typeinfo["typename_2"]}'
 
 class ArrayQueue(TemplateClass):
     def __init__(self, typename):
@@ -82,7 +95,14 @@ class HashTable(TemplateClass):
             'hash_table.template.c',
             'hash_table.template.h'
         )
-        self.dependencies = [LinkedList(typeinfo['val_type'])]
+        pair_dep = Pair({
+            'typename_1': typeinfo['key_type'],
+            'typename_2': typeinfo['val_type']
+        })
+        self.dependencies = [
+            pair_dep,
+            LinkedList(f'{pair_dep.getTemplateTypeName()}')
+        ]
 
 
 parser = argparse.ArgumentParser()
