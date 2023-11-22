@@ -1,44 +1,27 @@
-[
-    {
-        "src_file": "./templates/containers/linked_list.h",
-        "dst_file": "./test/templates/containers/generated/linked_list_of_person.h",
-        "type_name": "person",
-        "additional_rel_headers": [
-            "../../../dummy/person.h"
-        ]
+{
+    "src_dir": "./templates/containers/",
+    "dest": {
+        "dir": "./test/templates/containers/generated/",
+        ".h": "data_structures.h",
+        ".c": "data_structures.c"
     },
-    {
-        "src_file": "./templates/containers/linked_list.c",
-        "dst_file": "./test/templates/containers/generated/linked_list_of_person.c",
-        "type_name": "person",
-        "template_header": "linked_list_of_person.h"
-    },
-    {
-        "src_file": "./templates/containers/array_stack.h",
-        "dst_file": "./test/templates/containers/generated/array_stack_of_person.h",
-        "type_name": "person",
-        "additional_rel_headers": [
-            "../../../dummy/person.h"
-        ]
-    },
-    {
-        "src_file": "./templates/containers/array_stack.c",
-        "dst_file": "./test/templates/containers/generated/array_stack_of_person.c",
-        "type_name": "person",
-        "template_header": "array_stack_of_person.h"
-    },
-    {
-        "src_file": "./templates/containers/array_queue.h",
-        "dst_file": "./test/templates/containers/generated/array_queue_of_person.h",
-        "type_name": "person",
-        "additional_rel_headers": [
-            "../../../dummy/person.h"
-        ]
-    },
-    {
-        "src_file": "./templates/containers/array_queue.c",
-        "dst_file": "./test/templates/containers/generated/array_queue_of_person.c",
-        "type_name": "person",
-        "template_header": "array_queue_of_person.h"
-    }
-]
+    "additional_absolute_headers": [],
+    "additional_relative_headers": [
+        "../../../dummy/person.h",
+        "../../../dummy/vehicle.h"
+    ],
+    "optional": [],
+    "array_queue": ["person", "vehicle"],
+    "array_stack": ["person", "vehicle"],
+    "linked_list": ["person", "vehicle"],
+    "hash_table": [
+        {
+            "key_type": "int",
+            "val_type": "person"
+        },
+        {
+            "key_type": "int",
+            "val_type": "vehicle"
+        }
+    ]
+}

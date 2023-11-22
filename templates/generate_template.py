@@ -1,63 +1,152 @@
 import argparse
+import io
 import json
+import os
 import sys
 
-def generate_template(
-    src_file,
-    dst_file,
-    type_name,
-    template_header,
-    additional_abs_headers,
-    additional_rel_headers
-):
-    with open(src_file, 'r') as ifstream:
-        with open(dst_file, 'w') as ofstream:
-            for line in ifstream:
-                processed = (
-                    line
-                    .rstrip(''.join([' ', '\\', '\n']))
-                    .replace('<typename>', type_name)
-                    .replace('<template_header>', template_header)
-                    .replace('<additional_abs_headers>', additional_abs_headers)
-                    .replace('<additional_rel_headers>', additional_rel_headers)
-                )
-                ofstream.write(processed)
-                ofstream.write('\n')
+class TemplateClass:
+    def __init__(self, typeinfo, source_template_file, header_template_file):
+        self.typeinfo = typeinfo
+        self.source_template_file = source_template_file
+        self.header_template_file = header_template_file
+        self.dependencies = []
 
-def create_headers_str(headers, beg_delim, end_delim):
-    additional_abs_headers = ''
-    for header in headers:
-        additional_abs_headers += f'#include {beg_delim}{header}{end_delim}\n'
-    return additional_abs_headers
+    def __eq__(self, other):
+        return (
+            self.__class__.__name__ == other.__class__.__name__ and
+            self.typeinfo == other.typeinfo
+        )
+
+    def __str__(self):
+        return f'<{self.__class__.__name__} typename={self.typename}>'
+
+    def getProcessedLine(self, line):
+        processed = line.rstrip(''.join([' ', '\\', '\n'])) + '\n'
+        for key, val in self.typeinfo.items():
+            processed = processed.replace(f'<{key}>', val)
+        return processed
+
+    def getProcessedFileContents(self, file):
+        contentStream = io.StringIO()
+        for line in file:
+            contentStream.write(self.getProcessedLine(line))
+        contentStream.write('\n')
+        return contentStream.getvalue()
+
+    def getProcessedSourceContents(self, src_dir):
+        with open(os.path.join(src_dir, self.source_template_file), 'r') as f:
+            return self.getProcessedFileContents(f)
+
+    def getProcessedHeaderContents(self, src_dir):
+        with open(os.path.join(src_dir, self.header_template_file), 'r') as f:
+            return self.getProcessedFileContents(f)
+
+class Optional(TemplateClass):
+    def __init__(self, typename):
+        super().__init__(
+            { 'typename': typename },
+            'optional.template.c',
+            'optional.template.h'
+        )
+
+class ArrayQueue(TemplateClass):
+    def __init__(self, typename):
+        super().__init__(
+            { 'typename': typename },
+            'array_queue.template.c',
+            'array_queue.template.h'
+        )
+        self.dependencies = [Optional(typename)]
+
+class ArrayStack(TemplateClass):
+    def __init__(self, typename):
+        super().__init__(
+            { 'typename': typename },
+            'array_stack.template.c',
+            'array_stack.template.h'
+        )
+        self.dependencies = [Optional(typename)]
+
+class LinkedList(TemplateClass):
+    def __init__(self, typename):
+        super().__init__(
+            { 'typename': typename },
+            'linked_list.template.c',
+            'linked_list.template.h'
+        )
+
+class HashTable(TemplateClass):
+    def __init__(self, typeinfo):
+        super().__init__(
+            typeinfo,
+            'hash_table.template.c',
+            'hash_table.template.h'
+        )
+        self.dependencies = [LinkedList(typeinfo['val_type'])]
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--config_file', default=None)
-parser.add_argument('--src_file')
-parser.add_argument('--dst_file')
-parser.add_argument('--template_header', default='')
-parser.add_argument('--additional_abs_header', default=[], action='append')
-parser.add_argument('--additional_rel_header', default=[], action='append')
-parser.add_argument('--type_name')
 args = parser.parse_args(sys.argv[1:])
 
-if args.config_file:
-    with open(args.config_file) as ifstream:
-        configs = json.loads(ifstream.read())
-        for c in configs:
-            generate_template(
-                c['src_file'],
-                c['dst_file'],
-                c['type_name'],
-                c['template_header'] if 'template_header' in c else '',
-                create_headers_str(c['additional_abs_headers'], '<', '>') if 'additional_abs_headers' in c else '',
-                create_headers_str(c['additional_rel_headers'], '"', '"') if 'additional_rel_headers' in c else '',
-            )
-else:
-        generate_template(
-            args.src_file,
-            args.dst_file,
-            args.type_name,
-            args.template_header,
-            create_headers_str(args.additional_abs_header, '<', '>'),
-            create_headers_str(args.additional_rel_header, '"', '"'),
-        )
+with open(args.config_file, 'r') as config_file:
+    config = json.loads(config_file.read())
+
+    templates = []
+    for typename in config['optional']:
+        templates.append(Optional(typename))
+    for typename in config['array_queue']:
+        templates.append(ArrayQueue(typename))
+    for typename in config['array_stack']:
+        templates.append(ArrayStack(typename))
+    for typename in config['linked_list']:
+        templates.append(LinkedList(typename))
+    for typeinfo in config['hash_table']:
+        templates.append(HashTable(typeinfo))
+
+    # Resolve dependencies (crude, not sure about cycles)
+    while True:
+        dependencies = []
+        for t in templates:
+            for t_d in t.dependencies:
+                if (
+                    t_d not in templates and
+                    t_d not in dependencies
+                ):
+                    dependencies.append(t_d)
+        if len(dependencies) == 0:
+            break
+        templates = dependencies + templates
+
+    src_dir = config['src_dir']
+    dest_dir = config['dest']['dir']
+    dest_c = config['dest']['.c']
+    dest_h = config['dest']['.h']
+
+    with open(os.path.join(dest_dir, dest_c), 'w') as c_contents:
+        with open(os.path.join(src_dir, 'template_header.template.c'), 'r') as th_c:
+            c_contents.write(th_c.read())
+            c_contents.write('\n\n')
+        c_contents.write(f'#include "{dest_h}"\n')
+        c_contents.write('\n')
+        for t in templates:
+            c_contents.write(t.getProcessedSourceContents(src_dir))
+        with open(os.path.join(src_dir, 'template_footer.template.c'), 'r') as tf_c:
+            c_contents.write(tf_c.read())
+            c_contents.write('\n')    
+
+    with open(os.path.join(dest_dir, dest_h), 'w') as h_contents:
+        with open(os.path.join(src_dir, 'template_header.template.h'), 'r') as th_h:
+            h_contents.write(th_h.read())
+            h_contents.write('\n')
+        for abs_h in config['additional_absolute_headers']:
+            h_contents.write(f'#include <{abs_h}>\n')
+        h_contents.write('\n')
+        for rel_h in config['additional_relative_headers']:
+            h_contents.write(f'#include "{rel_h}"\n')
+        h_contents.write('\n')
+        for t in templates:
+            h_contents.write(t.getProcessedHeaderContents(src_dir))
+        with open(os.path.join(src_dir, 'template_footer.template.h'), 'r') as tf_h:
+            h_contents.write(tf_h.read())
+            h_contents.write('\n')

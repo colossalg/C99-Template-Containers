@@ -4,7 +4,7 @@
 
 #include "../../dummy/person.h"
 
-#include "./generated/array_queue_of_person.h"
+#include "./generated/data_structures.h"
 
 void test_array_queue_of_xxx_enqueue_and_dequeue()
 {
@@ -27,7 +27,7 @@ void test_array_queue_of_xxx_enqueue_and_dequeue()
     assert(queue->tail == people_len);
 
     for (size_t i = 0; i < people_len; ++i) {
-        array_queue_optional_person res = queue->dequeue(queue);
+        optional_person res = queue->dequeue(queue);
         if (!res.has_value) {
             fprintf(stderr, "dequeue() failed.");
             exit(EXIT_FAILURE);
@@ -53,7 +53,7 @@ void test_array_queue_of_xxx_enqueue_and_dequeue()
     assert(queue->tail == people_len - 1);
 
     for (size_t i = 0; i < people_len; ++i) {
-        array_queue_optional_person res = queue->dequeue(queue);
+        optional_person res = queue->dequeue(queue);
         if (!res.has_value) {
             fprintf(stderr, "dequeue() failed.");
             exit(EXIT_FAILURE);
@@ -99,7 +99,7 @@ void test_array_queue_of_xxx_underflow()
         exit(EXIT_FAILURE);
     }
 
-    array_queue_optional_person res = queue->dequeue(queue);
+    optional_person res = queue->dequeue(queue);
     assert(!res.has_value);
 
     queue->destroy(queue);

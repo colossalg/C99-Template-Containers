@@ -4,7 +4,7 @@
 
 #include "../../dummy/person.h"
 
-#include "./generated/linked_list_of_person.h"
+#include "./generated/data_structures.h"
 
 list_of_person* create_populated_list_of_person()
 {

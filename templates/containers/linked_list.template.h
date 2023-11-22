@@ -1,12 +1,3 @@
-#ifndef COLOSSALG_LINKED_LIST_OF_<typename>_H
-#define COLOSSALG_LINKED_LIST_OF_<typename>_H
-
-#include <stdbool.h>
-#include <stdlib.h>
-
-<additional_abs_headers>
-<additional_rel_headers>
-
 struct list_of_<typename>;
 struct list_of_<typename>_item;
 
@@ -39,5 +30,3 @@ struct list_of_<typename>_item {
 };
 
 list_of_<typename>* list_of_<typename>_create();
-
-#endif // COLOSSALG_LINKED_LIST_OF_<typename>_H

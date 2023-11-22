@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "framework.h"
 
 #include "templates/containers/array_queue_test.h"
@@ -6,16 +8,21 @@
 
 int main(int argc, char** argv)
 {
+    printf("Array Queue Tests\n");
     RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_enqueue_and_dequeue);
     RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_overflow);
     RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_underflow);
     RUN_TEST_IN_OWN_PROCESS(test_array_queue_of_xxx_destroy);
+    printf("\n");
 
+    printf("Array Stack Tests\n");
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_push_and_pop);
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_overflow);
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_underflow);
     RUN_TEST_IN_OWN_PROCESS(test_array_stack_of_xxx_destroy);
+    printf("\n");
 
+    printf("Linked List Tests\n");
     RUN_TEST_IN_OWN_PROCESS(test_list_of_xxx_insert_at_head);
     RUN_TEST_IN_OWN_PROCESS(test_list_of_xxx_insert_at_tail);
     RUN_TEST_IN_OWN_PROCESS(test_list_of_xxx_insert_before_head);
@@ -26,4 +33,5 @@ int main(int argc, char** argv)
     RUN_TEST_IN_OWN_PROCESS(test_list_of_xxx_remove_tail);
     RUN_TEST_IN_OWN_PROCESS(test_list_of_xxx_remove);
     RUN_TEST_IN_OWN_PROCESS(test_list_of_xxx_clear);
+    printf("\n");
 }

@@ -1,13 +1,19 @@
-#include "<template_header>"
-
-#include <stdio.h>
-
-<additional_abs_headers>
-<additional_rel_headers>
-
-array_queue_optional_<typename> array_queue_of_<typename>_dequeue(array_queue_of_<typename>* queue)
+bool array_queue_of_<typename>_enqueue(array_queue_of_<typename>* queue, <typename> data)
 {
-    array_queue_optional_<typename> result;
+    if (queue->size >= queue->max_size) {
+        return false;
+    }
+
+    queue->elements[queue->tail] = data;
+    queue->size++;
+    queue->tail = (queue->tail + 1) % (queue->max_size + 1);
+
+    return true;
+}
+
+optional_<typename> array_queue_of_<typename>_dequeue(array_queue_of_<typename>* queue)
+{
+    optional_<typename> result;
     result.has_value = false;
 
     if (queue->size <= 0) {
@@ -21,19 +27,6 @@ array_queue_optional_<typename> array_queue_of_<typename>_dequeue(array_queue_of
     queue->head = (queue->head + 1) % (queue->max_size + 1);
 
     return result;
-}
-
-bool array_queue_of_<typename>_enqueue(array_queue_of_<typename>* queue, <typename> data)
-{
-    if (queue->size >= queue->max_size) {
-        return false;
-    }
-
-    queue->elements[queue->tail] = data;
-    queue->size++;
-    queue->tail = (queue->tail + 1) % (queue->max_size + 1);
-
-    return true;
 }
 
 void array_queue_of_<typename>_clear(array_queue_of_<typename>* queue)

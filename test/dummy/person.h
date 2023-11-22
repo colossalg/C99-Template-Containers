@@ -8,7 +8,6 @@ typedef struct person {
     char fname[32];
     char lname[32];
 } person;
-typedef person* person_ptr;
 
 extern const size_t people_len;
 extern person people[];

@@ -1,8 +1,3 @@
-#include "<template_header>"
-
-<additional_abs_headers>
-<additional_rel_headers>
-
 list_of_<typename>_item* list_of_<typename>_item_create(
     <typename> data,
     list_of_<typename>* list,
