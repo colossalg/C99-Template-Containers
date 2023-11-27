@@ -1,12 +1,3 @@
-#ifndef COLOSSALG_LINKED_LIST_OF_<typename>_H
-#define COLOSSALG_LINKED_LIST_OF_<typename>_H
-
-#include <stdbool.h>
-#include <stdlib.h>
-
-<additional_abs_headers>
-<additional_rel_headers>
-
 struct list_of_<typename>;
 struct list_of_<typename>_item;
 
@@ -19,12 +10,12 @@ struct list_of_<typename> {
     list_of_<typename>_item* tail;
 
     bool (*insert_at_head)  (list_of_<typename>* list, <typename> data);
-    void (*remove_head)     (list_of_<typename>* list);
+    void (*remove_head)     (list_of_<typename>* list, bool destroy);
     bool (*insert_at_tail)  (list_of_<typename>* list, <typename> data);
-    void (*remove_tail)     (list_of_<typename>* list);
+    void (*remove_tail)     (list_of_<typename>* list, bool destroy);
     bool (*insert_before)   (list_of_<typename>_item* item, <typename> data);
     bool (*insert_after)    (list_of_<typename>_item* item, <typename> data);
-    void (*remove)          (list_of_<typename>_item* item);
+    void (*remove)          (list_of_<typename>_item* item, bool destroy);
     void (*clear)           (list_of_<typename>* list);
     void (*destroy)         (list_of_<typename>* list);
 
@@ -39,5 +30,3 @@ struct list_of_<typename>_item {
 };
 
 list_of_<typename>* list_of_<typename>_create();
-
-#endif // COLOSSALG_LINKED_LIST_OF_<typename>_H

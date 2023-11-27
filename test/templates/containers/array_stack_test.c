@@ -4,7 +4,7 @@
 
 #include "../../dummy/person.h"
 
-#include "./generated/array_stack_of_person.h"
+#include "./generated/data_structures.h"
 
 void test_array_stack_of_xxx_push_and_pop()
 {
@@ -26,7 +26,7 @@ void test_array_stack_of_xxx_push_and_pop()
     assert(people_len == stack->head + 1);
 
     for (size_t i = 0; i < people_len; ++i) {
-        array_stack_optional_person res = stack->pop(stack);
+        optional_person res = stack->pop(stack);
         if (!res.has_value) {
             fprintf(stderr, "pop() failed.");
             exit(EXIT_FAILURE);
@@ -50,7 +50,7 @@ void test_array_stack_of_xxx_push_and_pop()
     assert(people_len == stack->head + 1);
 
     for (size_t i = 0; i < people_len; ++i) {
-        array_stack_optional_person res = stack->pop(stack);
+        optional_person res = stack->pop(stack);
         if (!res.has_value) {
             fprintf(stderr, "pop() failed.");
             exit(EXIT_FAILURE);
@@ -95,7 +95,7 @@ void test_array_stack_of_xxx_underflow()
         exit(EXIT_FAILURE);
     }
 
-    array_stack_optional_person res = stack->pop(stack);
+    optional_person res = stack->pop(stack);
     assert(!res.has_value);
 
     stack->destroy(stack);

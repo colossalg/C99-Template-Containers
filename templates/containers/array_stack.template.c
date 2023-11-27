@@ -1,13 +1,19 @@
-#include "<template_header>"
-
-#include <stdio.h>
-
-<additional_abs_headers>
-<additional_rel_headers>
-
-array_stack_optional_<typename> array_stack_of_<typename>_pop(array_stack_of_<typename>* stack)
+bool array_stack_of_<typename>_push(array_stack_of_<typename>* stack, <typename> data)
 {
-    array_stack_optional_<typename> result;
+    if (stack->size >= stack->max_size) {
+        return false;
+    }
+
+    stack->size++;
+    stack->head++;
+    stack->elements[stack->head] = data;
+
+    return true;
+}
+
+optional_<typename> array_stack_of_<typename>_pop(array_stack_of_<typename>* stack)
+{
+    optional_<typename> result;
     result.has_value = false;
 
     if (stack->size <= 0) {
@@ -21,19 +27,6 @@ array_stack_optional_<typename> array_stack_of_<typename>_pop(array_stack_of_<ty
     stack->head--;
 
     return result;
-}
-
-bool array_stack_of_<typename>_push(array_stack_of_<typename>* stack, <typename> data)
-{
-    if (stack->size >= stack->max_size) {
-        return false;
-    }
-
-    stack->size++;
-    stack->head++;
-    stack->elements[stack->head] = data;
-
-    return true;
 }
 
 void array_stack_of_<typename>_clear(array_stack_of_<typename>* stack)

@@ -4,7 +4,7 @@
 
 #include "../../dummy/person.h"
 
-#include "./generated/linked_list_of_person.h"
+#include "./generated/data_structures.h"
 
 list_of_person* create_populated_list_of_person()
 {
@@ -187,7 +187,7 @@ void test_list_of_xxx_remove_head()
 
     list_of_person_item* old_head_next = list->head->next;
 
-    list->remove_head(list);
+    list->remove_head(list, true);
 
     assert(people_len - 1 == list->size);
 
@@ -205,7 +205,7 @@ void test_list_of_xxx_remove_tail()
 
     list_of_person_item* old_tail_prev = list->tail->prev;
 
-    list->remove_tail(list);
+    list->remove_tail(list, true);
 
     assert(people_len - 1 == list->size);
 
@@ -229,7 +229,7 @@ void test_list_of_xxx_remove()
     list_of_person_item* old_prev = item->prev;
     list_of_person_item* old_next = item->next;
 
-    list->remove(item);
+    list->remove(item, true);
 
     assert(people_len - 1 == list->size);
 

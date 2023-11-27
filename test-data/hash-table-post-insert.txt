@@ -1,0 +1,8 @@
+Slot #0:
+Person{ id: 0, fname: Helen, lname: Wylie }
+Person{ id: 3, fname: Tracey, lname: Jones }
+Slot #1:
+Person{ id: 1, fname: Angus, lname: Wylie }
+Person{ id: 4, fname: Samuel, lname: Wylie }
+Slot #2:
+Person{ id: 2, fname: Reuben, lname: Wylie }
