@@ -10,12 +10,12 @@ struct list_of_<typename> {
     list_of_<typename>_item* tail;
 
     bool (*insert_at_head)  (list_of_<typename>* list, <typename> data);
-    void (*remove_head)     (list_of_<typename>* list);
+    void (*remove_head)     (list_of_<typename>* list, bool destroy);
     bool (*insert_at_tail)  (list_of_<typename>* list, <typename> data);
-    void (*remove_tail)     (list_of_<typename>* list);
+    void (*remove_tail)     (list_of_<typename>* list, bool destroy);
     bool (*insert_before)   (list_of_<typename>_item* item, <typename> data);
     bool (*insert_after)    (list_of_<typename>_item* item, <typename> data);
-    void (*remove)          (list_of_<typename>_item* item);
+    void (*remove)          (list_of_<typename>_item* item, bool destroy);
     void (*clear)           (list_of_<typename>* list);
     void (*destroy)         (list_of_<typename>* list);
 

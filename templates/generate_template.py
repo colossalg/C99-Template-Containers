@@ -101,7 +101,8 @@ class HashTable(TemplateClass):
         })
         self.dependencies = [
             pair_dep,
-            LinkedList(f'{pair_dep.getTemplateTypeName()}')
+            Optional(pair_dep.getTemplateTypeName()),
+            LinkedList(pair_dep.getTemplateTypeName())
         ]
 
 

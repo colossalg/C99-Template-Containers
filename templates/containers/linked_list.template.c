@@ -37,7 +37,7 @@ bool list_of_<typename>_insert_at_head(list_of_<typename>* list, <typename> data
     return true;
 }
 
-void list_of_<typename>_remove_head(list_of_<typename>* list)
+void list_of_<typename>_remove_head(list_of_<typename>* list, bool destroy)
 {
     if (0 == list->size) {
         return;
@@ -54,7 +54,9 @@ void list_of_<typename>_remove_head(list_of_<typename>* list)
     }
     list->size--;
 
-    list->destroy_data(old_head->data);
+    if (destroy) {
+        list->destroy_data(old_head->data);
+    }
     free(old_head);
 }
 
@@ -78,7 +80,7 @@ bool list_of_<typename>_insert_at_tail(list_of_<typename>* list, <typename> data
     return true;
 }
 
-void list_of_<typename>_remove_tail(list_of_<typename>* list)
+void list_of_<typename>_remove_tail(list_of_<typename>* list, bool destroy)
 {
     if (0 == list->size) {
         return;
@@ -95,7 +97,9 @@ void list_of_<typename>_remove_tail(list_of_<typename>* list)
     }
     list->size--;
 
-    list->destroy_data(old_tail->data);
+    if (destroy) {
+        list->destroy_data(old_tail->data);
+    }
     free(old_tail);
 }
 
@@ -151,7 +155,7 @@ bool list_of_<typename>_insert_after(list_of_<typename>_item* item, <typename> d
     return new_item;
 }
 
-void list_of_<typename>_remove(list_of_<typename>_item* item)
+void list_of_<typename>_remove(list_of_<typename>_item* item, bool destroy)
 {
     if (NULL == item) {
         return;
@@ -160,11 +164,11 @@ void list_of_<typename>_remove(list_of_<typename>_item* item)
     list_of_<typename>* list = item->list;
 
     if (list->head == item) {
-        list->remove_head(list);
+        list->remove_head(list, destroy);
         return;
     }
     if (list->tail == item) {
-        list->remove_tail(list);
+        list->remove_tail(list, destroy);
         return;
     }
 
@@ -173,7 +177,9 @@ void list_of_<typename>_remove(list_of_<typename>_item* item)
 
     list->size--;
 
-    list->destroy_data(item->data);
+    if (destroy) {
+        list->destroy_data(item->data);
+    }
     free(item);
 }
 

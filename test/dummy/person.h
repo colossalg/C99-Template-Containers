@@ -5,6 +5,7 @@
 #include <stddef.h>
 
 typedef struct person {
+    int id;
     char fname[32];
     char lname[32];
 } person;
